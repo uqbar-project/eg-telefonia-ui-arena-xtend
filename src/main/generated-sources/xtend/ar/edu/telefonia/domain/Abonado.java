@@ -2,31 +2,20 @@ package ar.edu.telefonia.domain;
 
 import ar.edu.telefonia.domain.Factura;
 import ar.edu.telefonia.domain.Llamada;
+import com.google.common.base.Objects;
+import java.beans.Transient;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
-import org.eclipse.xtext.xbase.lib.Functions.Function0;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.uqbar.commons.model.UserException;
+import org.uqbar.commons.utils.Observable;
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TIPO_ABONADO", discriminatorType = DiscriminatorType.STRING)
+@Observable
 @SuppressWarnings("all")
-public abstract class Abonado {
-  @Id
-  @GeneratedValue
+public abstract class Abonado implements Cloneable {
   private Long _id;
   
   public Long getId() {
@@ -37,7 +26,6 @@ public abstract class Abonado {
     this._id = id;
   }
   
-  @Column
   private String _nombre;
   
   public String getNombre() {
@@ -48,7 +36,6 @@ public abstract class Abonado {
     this._nombre = nombre;
   }
   
-  @Column
   private String _numero;
   
   public String getNumero() {
@@ -59,13 +46,7 @@ public abstract class Abonado {
     this._numero = numero;
   }
   
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private List<Factura> _facturas = new Function0<List<Factura>>() {
-    public List<Factura> apply() {
-      ArrayList<Factura> _arrayList = new ArrayList<Factura>();
-      return _arrayList;
-    }
-  }.apply();
+  private List<Factura> _facturas;
   
   public List<Factura> getFacturas() {
     return this._facturas;
@@ -75,13 +56,7 @@ public abstract class Abonado {
     this._facturas = facturas;
   }
   
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  private List<Llamada> _llamadas = new Function0<List<Llamada>>() {
-    public List<Llamada> apply() {
-      ArrayList<Llamada> _arrayList = new ArrayList<Llamada>();
-      return _arrayList;
-    }
-  }.apply();
+  private List<Llamada> _llamadas;
   
   public List<Llamada> getLlamadas() {
     return this._llamadas;
@@ -91,38 +66,65 @@ public abstract class Abonado {
     this._llamadas = llamadas;
   }
   
+  public Abonado() {
+    ArrayList<Factura> _arrayList = new ArrayList<Factura>();
+    this.setFacturas(_arrayList);
+    ArrayList<Llamada> _arrayList_1 = new ArrayList<Llamada>();
+    this.setLlamadas(_arrayList_1);
+  }
+  
+  public Abonado copy() {
+    try {
+      Object _clone = super.clone();
+      return ((Abonado) _clone);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
   public abstract float costo(final Llamada llamada);
   
   public boolean esMoroso() {
     Double _deuda = this.deuda();
-    boolean _greaterThan = ((_deuda).doubleValue() > 0);
-    return _greaterThan;
+    return ((_deuda).doubleValue() > 0);
   }
   
   public Double deuda() {
     List<Factura> _facturas = this.getFacturas();
-    final Function2<Double,Factura,Double> _function = new Function2<Double,Factura,Double>() {
+    final Function2<Double, Factura, Double> _function = new Function2<Double, Factura, Double>() {
       public Double apply(final Double acum, final Factura factura) {
-        BigDecimal _saldo = factura.getSaldo();
+        BigDecimal _saldo = factura.saldo();
         float _floatValue = _saldo.floatValue();
-        double _plus = ((acum).doubleValue() + _floatValue);
-        return Double.valueOf(_plus);
+        return Double.valueOf(((acum).doubleValue() + _floatValue));
       }
     };
-    Double _fold = IterableExtensions.<Factura, Double>fold(_facturas, Double.valueOf(0.0), _function);
-    return _fold;
+    return IterableExtensions.<Factura, Double>fold(_facturas, Double.valueOf(0.0), _function);
   }
   
   public boolean agregarLlamada(final Llamada llamada) {
     List<Llamada> _llamadas = this.getLlamadas();
-    boolean _add = _llamadas.add(llamada);
-    return _add;
+    return _llamadas.add(llamada);
   }
   
   public boolean agregarFactura(final Factura factura) {
     List<Factura> _facturas = this.getFacturas();
-    boolean _add = _facturas.add(factura);
-    return _add;
+    return _facturas.add(factura);
+  }
+  
+  @Transient
+  public abstract String getDatosEspecificos();
+  
+  public void validar() {
+    String _numero = this.getNumero();
+    boolean _equals = Objects.equal(_numero, null);
+    if (_equals) {
+      throw new UserException("Debe ingresar número");
+    }
+    String _nombre = this.getNombre();
+    boolean _equals_1 = Objects.equal(_nombre, null);
+    if (_equals_1) {
+      throw new UserException("Debe ingresar nombre");
+    }
   }
   
   /**
@@ -140,7 +142,6 @@ public abstract class Abonado {
   }
   
   public Integer min(final Integer integer, final Integer integer2) {
-    Integer _max = this.max(integer2, integer);
-    return _max;
+    return this.max(integer2, integer);
   }
 }

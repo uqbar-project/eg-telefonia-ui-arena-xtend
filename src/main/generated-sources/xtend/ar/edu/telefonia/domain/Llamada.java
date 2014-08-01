@@ -1,61 +1,67 @@
 package ar.edu.telefonia.domain;
 
 import ar.edu.telefonia.domain.Abonado;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import org.uqbar.commons.utils.Observable;
 
+@Observable
 @SuppressWarnings("all")
 public class Llamada {
-  @Id
-  @GeneratedValue
-  private Long _id;
+  private Long id;
   
+  private Abonado origen;
+  
+  private Abonado destino;
+  
+  private Integer duracion;
+  
+  /**
+   * INICIO EXTRAS MANUALES QUE NECESITA HIBERNATE
+   */
   public Long getId() {
-    return this._id;
+    return this.id;
   }
-  
-  public void setId(final Long id) {
-    this._id = id;
-  }
-  
-  @ManyToOne
-  private Abonado _origen;
   
   public Abonado getOrigen() {
-    return this._origen;
+    return this.origen;
   }
-  
-  public void setOrigen(final Abonado origen) {
-    this._origen = origen;
-  }
-  
-  @ManyToOne
-  private Abonado _destino;
   
   public Abonado getDestino() {
-    return this._destino;
+    return this.destino;
   }
-  
-  public void setDestino(final Abonado destino) {
-    this._destino = destino;
-  }
-  
-  @Column
-  private Integer _duracion;
   
   public Integer getDuracion() {
-    return this._duracion;
+    return this.duracion;
   }
   
-  public void setDuracion(final Integer duracion) {
-    this._duracion = duracion;
+  public void setId(final Long unId) {
+    this.id = unId;
   }
   
+  public void setOrigen(final Abonado unOrigen) {
+    this.origen = unOrigen;
+  }
+  
+  public void setDestino(final Abonado unDestino) {
+    this.destino = unDestino;
+  }
+  
+  public void setDuracion(final Integer unaDuracion) {
+    this.duracion = unaDuracion;
+  }
+  
+  public Llamada() {
+    this.origen = null;
+    this.destino = null;
+    Integer _integer = new Integer(0);
+    this.duracion = _integer;
+  }
+  
+  /**
+   * FIN EXTRAS MANUALES QUE NECESITA HIBERNATE
+   */
   public Llamada(final Abonado unOrigen, final Abonado unDestino, final Integer unaDuracion) {
-    this.setOrigen(unOrigen);
-    this.setDestino(unDestino);
-    this.setDuracion(unaDuracion);
+    this.origen = unOrigen;
+    this.destino = unDestino;
+    this.duracion = unaDuracion;
   }
 }

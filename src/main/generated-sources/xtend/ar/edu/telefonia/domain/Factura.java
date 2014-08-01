@@ -2,71 +2,72 @@ package ar.edu.telefonia.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.uqbar.commons.utils.Observable;
 
-@Entity
+@Observable
 @SuppressWarnings("all")
 public class Factura {
-  @Id
-  @GeneratedValue
-  private Long _id;
+  private Long id;
   
+  private Date fecha;
+  
+  private BigDecimal totalPagado;
+  
+  private BigDecimal total;
+  
+  /**
+   * INICIO EXTRAS MANUALES QUE NECESITA HIBERNATE
+   */
   public Long getId() {
-    return this._id;
+    return this.id;
   }
-  
-  public void setId(final Long id) {
-    this._id = id;
-  }
-  
-  @Column
-  private Date _fecha;
   
   public Date getFecha() {
-    return this._fecha;
+    return this.fecha;
   }
-  
-  public void setFecha(final Date fecha) {
-    this._fecha = fecha;
-  }
-  
-  @Column
-  private BigDecimal _totalPagado;
   
   public BigDecimal getTotalPagado() {
-    return this._totalPagado;
+    return this.totalPagado;
   }
-  
-  public void setTotalPagado(final BigDecimal totalPagado) {
-    this._totalPagado = totalPagado;
-  }
-  
-  @Column
-  private BigDecimal _total;
   
   public BigDecimal getTotal() {
-    return this._total;
+    return this.total;
   }
   
-  public void setTotal(final BigDecimal total) {
-    this._total = total;
+  public void setId(final Long unId) {
+    this.id = unId;
   }
   
-  public BigDecimal getSaldo() {
-    BigDecimal _totalPagado = this.getTotalPagado();
-    BigDecimal _total = this.getTotal();
-    BigDecimal _subtract = _totalPagado.subtract(_total);
-    return _subtract;
+  public Date setFecha(final Date unaFecha) {
+    return this.fecha = unaFecha;
   }
   
+  public BigDecimal setTotalPagado(final BigDecimal unTotalPagado) {
+    return this.totalPagado = unTotalPagado;
+  }
+  
+  public BigDecimal setTotal(final BigDecimal unTotal) {
+    return this.total = unTotal;
+  }
+  
+  /**
+   * Constructor que necesita Hibernate
+   */
+  public Factura() {
+  }
+  
+  /**
+   * FIN EXTRAS MANUALES QUE NECESITA HIBERNATE
+   */
   public Factura(final Date unaFecha, final int elTotalPagado, final int elTotal) {
-    this.setFecha(unaFecha);
+    this.fecha = unaFecha;
     BigDecimal _bigDecimal = new BigDecimal(elTotalPagado);
-    this.setTotalPagado(_bigDecimal);
+    this.totalPagado = _bigDecimal;
     BigDecimal _bigDecimal_1 = new BigDecimal(elTotal);
-    this.setTotal(_bigDecimal_1);
+    this.total = _bigDecimal_1;
+  }
+  
+  public BigDecimal saldo() {
+    return this.totalPagado.subtract(this.total);
   }
 }
