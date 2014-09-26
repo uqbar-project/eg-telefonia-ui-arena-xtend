@@ -50,8 +50,19 @@ public class HomeTelefonia {
    * Genero una copia del objeto para no actualizar el que referencia el home
    */
   public Abonado getAbonado(final Abonado abonado) {
-    Abonado _doGetAbonado = this.doGetAbonado(abonado);
-    return _doGetAbonado.copy();
+    Abonado _xblockexpression = null;
+    {
+      final Abonado result = this.doGetAbonado(abonado);
+      Abonado _xifexpression = null;
+      boolean _equals = Objects.equal(result, null);
+      if (_equals) {
+        _xifexpression = null;
+      } else {
+        _xifexpression = result.copy();
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
   }
   
   /**

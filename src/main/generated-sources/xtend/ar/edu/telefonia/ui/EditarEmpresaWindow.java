@@ -19,6 +19,6 @@ public class EditarEmpresaWindow extends EditarAbonadoWindow {
     Label _label = new Label(panel);
     _label.setText("CUIT");
     TextBox _textBox = new TextBox(panel);
-    _textBox.<ControlBuilder>bindValueToProperty("cuit");
+    _textBox.<Object, ControlBuilder>bindValueToProperty("cuit");
   }
 }

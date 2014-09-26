@@ -16,6 +16,7 @@ import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.CheckBox;
+import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
@@ -54,16 +55,16 @@ public class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
     Label _label = new Label(searchFormPanel);
     _label.setText("Sólo morosos");
     final CheckBox checkMorosos = new CheckBox(searchFormPanel);
-    checkMorosos.<ControlBuilder>bindValueToProperty("busquedaAbonados.soloMorosos");
+    checkMorosos.<Object, ControlBuilder>bindValueToProperty("busquedaAbonados.soloMorosos");
   }
   
-  public Binding<ControlBuilder> crearTextBox(final Panel searchFormPanel, final String label, final String binding) {
-    Binding<ControlBuilder> _xblockexpression = null;
+  public Binding<Object, Control, ControlBuilder> crearTextBox(final Panel searchFormPanel, final String label, final String binding) {
+    Binding<Object, Control, ControlBuilder> _xblockexpression = null;
     {
       Label labelNumero = new Label(searchFormPanel);
       labelNumero.setText(label);
       final TextBox textBox = new TextBox(searchFormPanel);
-      _xblockexpression = textBox.<ControlBuilder>bindValueToProperty(binding);
+      _xblockexpression = textBox.<Object, ControlBuilder>bindValueToProperty(binding);
     }
     return _xblockexpression;
   }
@@ -126,7 +127,7 @@ public class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
     table.setHeight(200);
     table.setWidth(450);
     table.bindItemsToProperty("abonados");
-    table.<ControlBuilder>bindValueToProperty("abonadoSeleccionado");
+    table.<Object, ControlBuilder>bindValueToProperty("abonadoSeleccionado");
     this.describeResultsGrid(table);
   }
   
@@ -174,8 +175,8 @@ public class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
     };
     Button remove = _setCaption_1.onClick(_function_1);
     NotNullObservable elementSelected = new NotNullObservable("abonadoSeleccionado");
-    edit.<ControlBuilder>bindEnabled(elementSelected);
-    remove.<ControlBuilder>bindEnabled(elementSelected);
+    edit.<Object, ControlBuilder>bindEnabled(elementSelected);
+    remove.<Object, ControlBuilder>bindEnabled(elementSelected);
   }
   
   public void openDialog(final Dialog<?> dialog) {

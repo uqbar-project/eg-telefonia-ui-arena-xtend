@@ -28,12 +28,12 @@ public abstract class EditarAbonadoWindow extends Dialog<Abonado> {
     Label _label = new Label(form);
     _label.setText("Número");
     final TextBox textNumero = new TextBox(form);
-    textNumero.<ControlBuilder>bindValueToProperty("numero");
+    textNumero.<Object, ControlBuilder>bindValueToProperty("numero");
     Label _label_1 = new Label(form);
     _label_1.setText("Nombre");
     final TextBox txtNombre = new TextBox(form);
     txtNombre.setWidth(200);
-    txtNombre.<ControlBuilder>bindValueToProperty("nombre");
+    txtNombre.<Object, ControlBuilder>bindValueToProperty("nombre");
     this.addFormPanel(form);
   }
   

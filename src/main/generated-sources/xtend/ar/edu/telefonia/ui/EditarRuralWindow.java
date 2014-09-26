@@ -19,6 +19,6 @@ public class EditarRuralWindow extends EditarAbonadoWindow {
     Label _label = new Label(panel);
     _label.setText("Cantidad de hectáreas");
     TextBox _textBox = new TextBox(panel);
-    _textBox.<ControlBuilder>bindValueToProperty("cantidadHectareas");
+    _textBox.<Object, ControlBuilder>bindValueToProperty("cantidadHectareas");
   }
 }
