@@ -28,7 +28,12 @@ class HomeTelefonia {
 
 	/** Genero una copia del objeto para no actualizar el que referencia el home **/
 	def getAbonado(Abonado abonado) {
-		doGetAbonado(abonado).copy 
+		val result = doGetAbonado(abonado)
+		if (result == null) {
+			null
+		} else {
+			result.copy
+		} 
 	}
 
 	/** Genero una copia de los objetos para no actualizar el que referencia el home **/
