@@ -19,7 +19,7 @@ class TestHomeTelefonia {
 	Llamada llamada1 = new Llamada(walterWhite, jessePinkman, 10)
 
 	@Before
-	def init() {
+	def void init() {
 		homeTelefonia = HomeTelefonia.instance
 		
 		walterWhite = new Residencial()
