@@ -11,6 +11,8 @@ import ar.edu.telefonia.ui.EditarResidencialWindow;
 import ar.edu.telefonia.ui.EditarRuralWindow;
 import java.util.HashMap;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
@@ -123,12 +125,17 @@ public class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
   }
   
   protected void createResultsGrid(final Panel mainPanel) {
-    Table<Abonado> table = new Table<Abonado>(mainPanel, Abonado.class);
-    table.setHeight(200);
-    table.setWidth(450);
-    table.bindItemsToProperty("abonados");
-    table.<Object, ControlBuilder>bindValueToProperty("abonadoSeleccionado");
-    this.describeResultsGrid(table);
+    Table<Abonado> _table = new Table<Abonado>(mainPanel, Abonado.class);
+    final Procedure1<Table<Abonado>> _function = new Procedure1<Table<Abonado>>() {
+      public void apply(final Table<Abonado> it) {
+        it.setHeight(200);
+        it.setWidth(550);
+        it.bindItemsToProperty("abonados");
+        it.<Object, ControlBuilder>bindValueToProperty("abonadoSeleccionado");
+      }
+    };
+    Table<Abonado> _doubleArrow = ObjectExtensions.<Table<Abonado>>operator_doubleArrow(_table, _function);
+    this.describeResultsGrid(_doubleArrow);
   }
   
   /**
@@ -141,16 +148,20 @@ public class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
   public void describeResultsGrid(final Table<Abonado> table) {
     Column<Abonado> _column = new Column<Abonado>(table);
     Column<Abonado> _setTitle = _column.setTitle("Nombre");
-    Column<Abonado> _setFixedSize = _setTitle.setFixedSize(150);
+    Column<Abonado> _setFixedSize = _setTitle.setFixedSize(250);
     _setFixedSize.bindContentsToProperty("nombre");
     Column<Abonado> _column_1 = new Column<Abonado>(table);
     Column<Abonado> _setTitle_1 = _column_1.setTitle("Número");
     Column<Abonado> _setFixedSize_1 = _setTitle_1.setFixedSize(100);
     _setFixedSize_1.bindContentsToProperty("numero");
     Column<Abonado> _column_2 = new Column<Abonado>(table);
-    Column<Abonado> _setTitle_2 = _column_2.setTitle("Datos específicos");
-    Column<Abonado> _setFixedSize_2 = _setTitle_2.setFixedSize(300);
-    _setFixedSize_2.bindContentsToProperty("datosEspecificos");
+    Column<Abonado> _setTitle_2 = _column_2.setTitle("Deuda $");
+    Column<Abonado> _setFixedSize_2 = _setTitle_2.setFixedSize(100);
+    _setFixedSize_2.bindContentsToProperty("deuda");
+    Column<Abonado> _column_3 = new Column<Abonado>(table);
+    Column<Abonado> _setTitle_3 = _column_3.setTitle("Datos específicos");
+    Column<Abonado> _setFixedSize_3 = _setTitle_3.setFixedSize(200);
+    _setFixedSize_3.bindContentsToProperty("datosEspecificos");
   }
   
   public void createGridActions(final Panel mainPanel) {
@@ -213,24 +224,24 @@ public class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
     HashMap<Class<? extends Abonado>, Function0<? extends EditarAbonadoWindow>> _xblockexpression = null;
     {
       final HashMap<Class<? extends Abonado>, Function0<? extends EditarAbonadoWindow>> ventanas = new HashMap<Class<? extends Abonado>, Function0<? extends EditarAbonadoWindow>>();
-      final Function0<EditarRuralWindow> _function = new Function0<EditarRuralWindow>() {
-        public EditarRuralWindow apply() {
+      final Function0<EditarAbonadoWindow> _function = new Function0<EditarAbonadoWindow>() {
+        public EditarAbonadoWindow apply() {
           BuscarAbonadoAppModel _modelObject = AbonadoWindow.this.getModelObject();
           Abonado _abonadoSeleccionado = _modelObject.getAbonadoSeleccionado();
           return new EditarRuralWindow(AbonadoWindow.this, _abonadoSeleccionado);
         }
       };
       ventanas.put(Rural.class, _function);
-      final Function0<EditarResidencialWindow> _function_1 = new Function0<EditarResidencialWindow>() {
-        public EditarResidencialWindow apply() {
+      final Function0<EditarAbonadoWindow> _function_1 = new Function0<EditarAbonadoWindow>() {
+        public EditarAbonadoWindow apply() {
           BuscarAbonadoAppModel _modelObject = AbonadoWindow.this.getModelObject();
           Abonado _abonadoSeleccionado = _modelObject.getAbonadoSeleccionado();
           return new EditarResidencialWindow(AbonadoWindow.this, _abonadoSeleccionado);
         }
       };
       ventanas.put(Residencial.class, _function_1);
-      final Function0<EditarEmpresaWindow> _function_2 = new Function0<EditarEmpresaWindow>() {
-        public EditarEmpresaWindow apply() {
+      final Function0<EditarAbonadoWindow> _function_2 = new Function0<EditarAbonadoWindow>() {
+        public EditarAbonadoWindow apply() {
           BuscarAbonadoAppModel _modelObject = AbonadoWindow.this.getModelObject();
           Abonado _abonadoSeleccionado = _modelObject.getAbonadoSeleccionado();
           return new EditarEmpresaWindow(AbonadoWindow.this, _abonadoSeleccionado);

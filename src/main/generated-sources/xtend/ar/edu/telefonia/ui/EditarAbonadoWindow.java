@@ -2,6 +2,8 @@ package ar.edu.telefonia.ui;
 
 import ar.edu.telefonia.domain.Abonado;
 import ar.edu.telefonia.home.HomeTelefonia;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
@@ -27,13 +29,18 @@ public abstract class EditarAbonadoWindow extends Dialog<Abonado> {
     form.setLayout(_columnLayout);
     Label _label = new Label(form);
     _label.setText("Número");
-    final TextBox textNumero = new TextBox(form);
-    textNumero.<Object, ControlBuilder>bindValueToProperty("numero");
+    TextBox _textBox = new TextBox(form);
+    _textBox.<Object, ControlBuilder>bindValueToProperty("numero");
     Label _label_1 = new Label(form);
     _label_1.setText("Nombre");
-    final TextBox txtNombre = new TextBox(form);
-    txtNombre.setWidth(200);
-    txtNombre.<Object, ControlBuilder>bindValueToProperty("nombre");
+    TextBox _textBox_1 = new TextBox(form);
+    final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        it.setWidth(200);
+        it.<Object, ControlBuilder>bindValueToProperty("nombre");
+      }
+    };
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function);
     this.addFormPanel(form);
   }
   

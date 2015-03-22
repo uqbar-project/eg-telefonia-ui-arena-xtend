@@ -79,12 +79,12 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 	}
 
 	def protected createResultsGrid(Panel mainPanel) {
-		var table = new Table<Abonado>(mainPanel, Abonado)
-		table.height = 200
-		table.width = 450
-		table.bindItemsToProperty("abonados")
-		table.bindValueToProperty("abonadoSeleccionado")
-		this.describeResultsGrid(table)
+		this.describeResultsGrid(new Table<Abonado>(mainPanel, Abonado) => [
+			height = 200
+			width = 550
+			bindItemsToProperty("abonados")
+			bindValueToProperty("abonadoSeleccionado")
+		])
 	}
 
 	/**
@@ -97,17 +97,22 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 	def void describeResultsGrid(Table<Abonado> table) {
 		new Column<Abonado>(table) //
 			.setTitle("Nombre")
-			.setFixedSize(150)
+			.setFixedSize(250)
 			.bindContentsToProperty("nombre")
-
+	
 		new Column<Abonado>(table) //
 			.setTitle("Número")
 			.setFixedSize(100)
 			.bindContentsToProperty("numero")
 
 		new Column<Abonado>(table) //
+			.setTitle("Deuda $")
+			.setFixedSize(100)
+			.bindContentsToProperty("deuda")
+
+		new Column<Abonado>(table) //
 			.setTitle("Datos específicos")
-			.setFixedSize(300)
+			.setFixedSize(200)
 			.bindContentsToProperty("datosEspecificos")
 
 	}

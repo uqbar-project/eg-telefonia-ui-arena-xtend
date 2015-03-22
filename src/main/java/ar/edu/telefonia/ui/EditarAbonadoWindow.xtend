@@ -21,13 +21,13 @@ abstract class EditarAbonadoWindow extends Dialog<Abonado> {
 		val form = new Panel(mainPanel)
 		form.layout = new ColumnLayout(2)
 		new Label(form).text = "Número"
-		val textNumero = new TextBox(form)
-		textNumero.bindValueToProperty("numero")
+		new TextBox(form).bindValueToProperty("numero")
 
 		new Label(form).text = "Nombre"
-		val txtNombre = new TextBox(form)
-		txtNombre.width = 200
-		txtNombre.bindValueToProperty("nombre")
+		new TextBox(form) => [
+			width = 200
+			bindValueToProperty("nombre")
+		]
 
 		this.addFormPanel(form)
 	}
