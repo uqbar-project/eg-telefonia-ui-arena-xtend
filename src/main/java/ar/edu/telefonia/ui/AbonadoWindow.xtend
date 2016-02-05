@@ -19,6 +19,7 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
 class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 	
@@ -26,6 +27,7 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 		super(parent, model)
 		title = "Busqueda de abonados"
 		taskDescription = "Seleccione el criterio de búsqueda"
+		modelObject.buscar
 	}
 
 	override def createMainTemplate(Panel mainPanel) {
@@ -37,20 +39,21 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 	/** El panel permite buscar por rango desde/hasta nombre y morosos */	
 	override def void createFormPanel(Panel mainPanel) {
 		var searchFormPanel = new Panel(mainPanel)
-		searchFormPanel.setLayout(new ColumnLayout(2))
+		searchFormPanel.layout = new ColumnLayout(2)
 
 		crearTextBox(searchFormPanel, "Nombre desde", "busquedaAbonados.nombreDesde")
 		crearTextBox(searchFormPanel, "Nombre hasta", "busquedaAbonados.nombreHasta")
 		new Label(searchFormPanel).text = "Sólo morosos"
-		val checkMorosos = new CheckBox(searchFormPanel)
-		checkMorosos.bindValueToProperty("busquedaAbonados.soloMorosos")
+		new CheckBox(searchFormPanel) => [
+			value <=> "busquedaAbonados.soloMorosos"
+		]
 	}
 
 	def crearTextBox(Panel searchFormPanel, String label, String binding) {
-		var labelNumero = new Label(searchFormPanel)
-		labelNumero.text = label
-		val textBox = new TextBox(searchFormPanel)
-		textBox.bindValueToProperty(binding)
+		new Label(searchFormPanel).text = label
+		new TextBox(searchFormPanel) => [
+			value <=> binding
+		]
 	}
 	
 	override protected addActions(Panel actionsPanel) {
@@ -82,8 +85,8 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 		this.describeResultsGrid(new Table<Abonado>(mainPanel, Abonado) => [
 			height = 200
 			width = 550
-			bindItemsToProperty("abonados")
-			bindValueToProperty("abonadoSeleccionado")
+			items <=> "abonados"
+			value <=> "abonadoSeleccionado"
 		])
 	}
 
@@ -95,31 +98,35 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 	 * @param table
 	 */
 	def void describeResultsGrid(Table<Abonado> table) {
-		new Column<Abonado>(table) //
-			.setTitle("Nombre")
-			.setFixedSize(250)
-			.bindContentsToProperty("nombre")
+		new Column<Abonado>(table) => [
+			title = "Nombre"
+			fixedSize = 250
+			bindContentsToProperty("nombre")
+		]
 	
-		new Column<Abonado>(table) //
-			.setTitle("Número")
-			.setFixedSize(100)
-			.bindContentsToProperty("numero")
+		new Column<Abonado>(table) => [
+			title = "Número"
+			fixedSize = 100
+			bindContentsToProperty("numero")
+		]
 
-		new Column<Abonado>(table) //
-			.setTitle("Deuda $")
-			.setFixedSize(100)
-			.bindContentsToProperty("deuda")
+		new Column<Abonado>(table) => [
+			title = "Deuda $"
+			fixedSize = 100
+			bindContentsToProperty("deuda")
+		]
 
-		new Column<Abonado>(table) //
-			.setTitle("Datos específicos")
-			.setFixedSize(200)
-			.bindContentsToProperty("datosEspecificos")
+		new Column<Abonado>(table) => [
+			title = "Datos específicos"
+			fixedSize = 200
+			bindContentsToProperty("datosEspecificos")			
+		]
 
 	}
 
 	def void createGridActions(Panel mainPanel) {
 		var actionsPanel = new Panel(mainPanel)
-		actionsPanel.setLayout(new HorizontalLayout)
+		actionsPanel.layout = new HorizontalLayout
 
 		var edit = new Button(actionsPanel)
 			.setCaption("Editar")
@@ -155,11 +162,11 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 	}
 	
 	def getMapaVentanas() {
-		val ventanas = new HashMap<Class<? extends Abonado>, () => EditarAbonadoWindow>
-		ventanas.put(typeof(Rural), [ | new EditarRuralWindow(this, modelObject.abonadoSeleccionado) ] )
-		ventanas.put(typeof(Residencial), [ | new EditarResidencialWindow(this, modelObject.abonadoSeleccionado) ] )
-		ventanas.put(typeof(Empresa), [ | new EditarEmpresaWindow(this, modelObject.abonadoSeleccionado)] )
-		ventanas
+		return new HashMap<Class<? extends Abonado>, () => EditarAbonadoWindow> => [
+			put(typeof(Rural), [ | new EditarRuralWindow(this, modelObject.abonadoSeleccionado) ] )
+			put(typeof(Residencial), [ | new EditarResidencialWindow(this, modelObject.abonadoSeleccionado) ] )
+			put(typeof(Empresa), [ | new EditarEmpresaWindow(this, modelObject.abonadoSeleccionado)] )
+		]
 	}
 
 }
