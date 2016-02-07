@@ -17,7 +17,7 @@ abstract class EditarAbonadoWindow extends Dialog<Abonado> {
 
 	new(WindowOwner owner, Abonado model) {
 		super(owner, model)
-		this.delegate.setErrorViewer(this)
+		this.delegate.errorViewer = this
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
