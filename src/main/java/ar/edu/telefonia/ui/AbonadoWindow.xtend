@@ -149,11 +149,11 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 
 	/**
 	 * Para editar una ventana, construimos un mapa que asocia
-	 * clave: clase del objeto seleccionado => valor: un bloque que permite construir la ventana que le corresponde
+	 * clave: clase del objeto seleccionado | valor: un bloque que permite construir la ventana que le corresponde
 	 * si bien podríamos resolverlo con reflection, esa solución es mucho más compleja porque requiere buscar el
 	 *      constructor adecuado, setearle los parámetros, etc.
 	 * esta solución es mucho más simple, sólo necesita que explicitemos los tipos del mapa que estamos generando
-	 * (lo importante es el () => EditarAbonadowWindow porque castea los 3 bloques a algo que devuelve 
+	 * (lo importante es el () a EditarAbonadowWindow porque castea los 3 bloques a algo que devuelve 
 	 * una sublcase de EditarAbonadoWindow 
 	 */
 	 def editarAbonado() {
