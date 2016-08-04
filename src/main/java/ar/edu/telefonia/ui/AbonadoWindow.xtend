@@ -154,7 +154,7 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 	 *      constructor adecuado, setearle los parámetros, etc.
 	 * esta solución es mucho más simple, sólo necesita que explicitemos los tipos del mapa que estamos generando
 	 * (lo importante es el () a EditarAbonadowWindow porque castea los 3 bloques a algo que devuelve 
-	 * una sublcase de EditarAbonadoWindow 
+	 * una subclase de EditarAbonadoWindow 
 	 */
 	 def editarAbonado() {
 		val bloqueQueConstruyeVentana = mapaVentanas.get(modelObject.abonadoSeleccionado.class)
