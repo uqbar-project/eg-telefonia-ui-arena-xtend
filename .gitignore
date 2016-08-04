@@ -4,4 +4,4 @@
 .settings/
 *generated-sources*
 /bin
-/xtend-gen
+*xtend-gen*
