@@ -83,8 +83,7 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 
 	def protected createResultsGrid(Panel mainPanel) {
 		this.describeResultsGrid(new Table<Abonado>(mainPanel, Abonado) => [
-			height = 200
-			width = 550
+			numberVisibleRows = 10
 			items <=> "abonados"
 			value <=> "abonadoSeleccionado"
 		])
@@ -156,17 +155,30 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 	 * (lo importante es el () a EditarAbonadowWindow porque castea los 3 bloques a algo que devuelve 
 	 * una subclase de EditarAbonadoWindow 
 	 */
-	 def editarAbonado() {
-		val bloqueQueConstruyeVentana = mapaVentanas.get(modelObject.abonadoSeleccionado.class)
-		this.openDialog(bloqueQueConstruyeVentana.apply)
+	def editarAbonado() {
+		//val bloqueQueConstruyeVentana = mapaVentanas.get(modelObject.abonadoSeleccionado.class)
+		//this.openDialog(bloqueQueConstruyeVentana.apply)
+		this.openDialog(editarAbonado(modelObject.abonadoSeleccionado))
 	}
 	
-	def getMapaVentanas() {
-		return new HashMap<Class<? extends Abonado>, () => EditarAbonadoWindow> => [
-			put(typeof(Rural), [ | new EditarRuralWindow(this, modelObject.abonadoSeleccionado) ] )
-			put(typeof(Residencial), [ | new EditarResidencialWindow(this, modelObject.abonadoSeleccionado) ] )
-			put(typeof(Empresa), [ | new EditarEmpresaWindow(this, modelObject.abonadoSeleccionado)] )
-		]
+	def dispatch editarAbonado(Rural rural) {
+		new EditarRuralWindow(this, modelObject.abonadoSeleccionado)
 	}
+
+	def dispatch editarAbonado(Residencial residencial) {
+		new EditarResidencialWindow(this, modelObject.abonadoSeleccionado)
+	}
+
+	def dispatch editarAbonado(Empresa empresa) {
+		new EditarEmpresaWindow(this, modelObject.abonadoSeleccionado)
+	}
+	
+//	def getMapaVentanas() {
+//		return new HashMap<Class<? extends Abonado>, () => EditarAbonadoWindow> => [
+//			put(typeof(Rural), [ | new EditarRuralWindow(this, modelObject.abonadoSeleccionado) ] )
+//			put(typeof(Residencial), [ | new EditarResidencialWindow(this, modelObject.abonadoSeleccionado) ] )
+//			put(typeof(Empresa), [ | new EditarEmpresaWindow(this, modelObject.abonadoSeleccionado)] )
+//		]
+//	}
 
 }
