@@ -53,6 +53,7 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 		new Label(searchFormPanel).text = label
 		new TextBox(searchFormPanel) => [
 			value <=> binding
+			width = 300
 		]
 	}
 	
@@ -112,6 +113,7 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 		new Column<Abonado>(table) => [
 			title = "Deuda $"
 			fixedSize = 100
+			alignRight
 			bindContentsToProperty("deuda")
 		]
 
