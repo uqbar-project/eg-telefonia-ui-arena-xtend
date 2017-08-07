@@ -1,5 +1,7 @@
 # Telefonía
 
+[![Build Status](https://travis-ci.org/uqbar-project/eg-telefonia-ui-arena-xtend.svg?branch=master)](https://travis-ci.org/uqbar-project/eg-telefonia-ui-arena-xtend)
+
 ![telefono](https://cloud.githubusercontent.com/assets/4549002/17305442/be221dbc-5800-11e6-90a9-e6391f58170f.png)
 
 Aplicación que muestra cómo se puede diseñar las vistas en Arena:
