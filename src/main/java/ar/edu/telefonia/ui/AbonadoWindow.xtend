@@ -5,7 +5,6 @@ import ar.edu.telefonia.domain.Abonado
 import ar.edu.telefonia.domain.Empresa
 import ar.edu.telefonia.domain.Residencial
 import ar.edu.telefonia.domain.Rural
-import java.util.HashMap
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
@@ -19,6 +18,7 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
 class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
