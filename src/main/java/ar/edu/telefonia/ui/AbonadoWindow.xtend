@@ -30,14 +30,14 @@ class AbonadoWindow extends SimpleWindow<BuscarAbonadoAppModel> {
 		modelObject.buscar
 	}
 
-	override def createMainTemplate(Panel mainPanel) {
+	override createMainTemplate(Panel mainPanel) {
 		super.createMainTemplate(mainPanel)
 		this.createResultsGrid(mainPanel)
 		this.createGridActions(mainPanel)
 	}
 
 	/** El panel permite buscar por rango desde/hasta nombre y morosos */	
-	override def void createFormPanel(Panel mainPanel) {
+	override void createFormPanel(Panel mainPanel) {
 		var searchFormPanel = new Panel(mainPanel)
 		searchFormPanel.layout = new ColumnLayout(2)
 
